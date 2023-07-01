@@ -39,6 +39,9 @@ current_die = tk.StringVar()
 current_die.set(dice_list[4])
 
 
+def create_new_text():
+    text = tk.Text(root, height=1, width=5)
+    text.pack()
 
 
 
