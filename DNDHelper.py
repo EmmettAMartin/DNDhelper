@@ -3,6 +3,10 @@ import random as rand
 
 root = tk.Tk()
 
+root.geometry("750x750")
+
+root.title("DNDhelper v1.0")
+
 '''
 Features: Button that allows you to add a new character/NPC
           Text boxes that can store numbers
