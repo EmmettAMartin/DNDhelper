@@ -1,5 +1,9 @@
+from functools import partial
 import tkinter as tk
 import random as rand
+
+global name_text_box
+global health_text_box
 
 root = tk.Tk()
 
@@ -43,12 +47,35 @@ current_die = tk.StringVar()
 current_die.set(dice_list[4])
 
 
-def create_new_text():
+def create_new_text(x, y):
     text = tk.Text(root, height=1, width=5)
-    text.pack()
+    text.place(x=x, y=y)
+
+def create_new_label(x, y, text):
+    label = tk.Label(root, text=text, borderwidth=2, relief="solid")
+    label.place(x=x, y=y)
+
+def create_new_character(x, y, name, health):
+    print("New Character Created")
+    print(name)
+
+
+name_text_box_label = tk.Label(root, text="Name")
+name_text_box_label.place(x=125, y=675)
+
+name_text_box = tk.Text(root, height=1, width=5)
+name_text_box.place(x=125,y=700)
+
+health_text_box_label = tk.Label(root, text="Health")
+health_text_box_label.place(x=200, y=675)
+
+health_text_box = tk.Text(root, height=1, width=5)
+health_text_box.place(x=200,y=700)
 
 
 
+new_character_button = tk.Button(root, text="New Character", command=partial(create_new_character,5,5,"Orc1",5))
+new_character_button.place(x=10,y=700)
 
 
 root.mainloop()
