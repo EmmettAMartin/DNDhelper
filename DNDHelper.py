@@ -9,7 +9,9 @@ root = tk.Tk()
 
 root.geometry("750x750")
 
-root.title("DNDhelper v1.0")
+root.title("DNDhelper v1.0 - Not Resizable")
+
+root.resizable(False,False)
 
 '''
 Features: Button that allows you to add a new character/NPC
@@ -57,19 +59,22 @@ def create_new_label(x, y, text):
 
 def create_new_character(x, y, name, health):
     print("New Character Created")
+    name = name_text_box.get("1.0", "end-1c")
+    health = health_text_box.get("1.0","end-1c")
     print(name)
+    print(health)
 
 
 name_text_box_label = tk.Label(root, text="Name")
 name_text_box_label.place(x=125, y=675)
 
-name_text_box = tk.Text(root, height=1, width=5)
+name_text_box = tk.Text(root, height=1, width=8)
 name_text_box.place(x=125,y=700)
 
 health_text_box_label = tk.Label(root, text="Health")
 health_text_box_label.place(x=200, y=675)
 
-health_text_box = tk.Text(root, height=1, width=5)
+health_text_box = tk.Text(root, height=1, width=8)
 health_text_box.place(x=200,y=700)
 
 
