@@ -54,9 +54,6 @@ current_die.set(dice_list[4])
 character_count = 1
 
 
-
-
-
 ###############################################################################################
 # The Following code is not mine, and all credit goes to Sergeant_Ranger on github.           #
 ###############################################################################################
@@ -105,14 +102,12 @@ scrollable_frame = create_scrollable_frame(0, 0, 500, 650)
 
 #TREAT SCROLLABLE FRAME AS AN OTHERWISE NORMAL FRAME
 
-
-
 ###############################################################################################
 # Thanks again to Sergeant_Ranger for letting me use this.                                    #
 ###############################################################################################
 
 
-
+# TODO: Add 70 character limit
 
 
 def create_new_text(x, y, text):
@@ -129,14 +124,10 @@ def create_new_character():
     name = name_text_box.get("1.0", "end-1c")
     health = health_text_box.get("1.0","end-1c")
     armour = armour_text_box.get("1.0","end-1c")
-    create_new_label(10, (40*character_count), text=name)
-    create_new_text(110, (40*character_count), text=health)
-    create_new_text(210, (40*character_count), text=armour)
+    create_new_label(10, (40*character_count), name)
+    create_new_text(110+(int(len(name))*3), (40*character_count), health)
+    create_new_text(210+(int(len(name))*3), (40*character_count), armour)
     scrollable_frame.configure(height=40 * (character_count+1))
-
-    for i in range(3):
-        #create_new_text()
-        pass
 
     character_count += 1
 
