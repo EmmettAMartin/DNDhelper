@@ -52,7 +52,7 @@ current_die = tk.StringVar()
 
 current_die.set(dice_list[4])
 
-character_count = 1
+character_count = 0
 
 
 ###############################################################################################
@@ -108,7 +108,7 @@ scrollable_frame = create_scrollable_frame(0, 0, 500, 650)
 ###############################################################################################
 
 
-# TODO: Add 70 character limit (for name)
+# TODO: Add 70 character limit
 
 
 class DestroyButton(tk.Button):
@@ -118,6 +118,7 @@ class DestroyButton(tk.Button):
 
     def callback(self):
         self.master.destroy()
+        
 
 def create_new_text(x, y, text, parent):
     text_box = tk.Text(parent, height=1, width=5)
@@ -129,20 +130,21 @@ def create_new_label(x, y, text, parent):
     label.place(x=x, y=y)
 
 def create_new_frame(x, y, width, height, name, health, armour):
-    frame = tk.Frame(width=width, height=height, borderwidth=5, relief=tk.GROOVE)
-    frame.place(x=x, y=y)
+    frame = tk.Frame(scrollable_frame, width=width, height=height, borderwidth=5, relief=tk.GROOVE)
     create_new_label(10, 0, name, frame)
     create_new_text(110+(int(len(name))*3), 0, health, frame)
     create_new_text(210+(int(len(name))*3), 0, armour, frame)
-
+    destroy = DestroyButton(frame, text="Destroy Character")
+    destroy.place(x=0, y=40)
+    frame.place(x=x, y=y)
 
 def create_new_character():
     global character_count
     name = name_text_box.get("1.0", "end-1c")
     health = health_text_box.get("1.0","end-1c")
     armour = armour_text_box.get("1.0","end-1c")
-    scrollable_frame.configure(height=40 * (character_count+1))
-    create_new_frame(10, (40*character_count), 450, 40, name, health, armour)
+    scrollable_frame.configure(height=80 * (character_count+1))
+    create_new_frame(10, (80*character_count), 450, 80, name, health, armour)
     character_count += 1
 
 
