@@ -1,6 +1,7 @@
 from functools import partial
 import tkinter as tk
 import random as rand
+from tkinter import messagebox
 
 global name_text_box
 global health_text_box
@@ -17,8 +18,8 @@ root.resizable(False,False)
 title = tk.Label(text="DNDHelper")
 
 '''
-Features: Button that allows you to add a new character/NPC
-          Text boxes that can store numbers
+Features: DONE - Button that allows you to add a new character/NPC
+          DONE - Text boxes that can store numbers
           Deal damage function?
           Categories for different attributes
           Auto-Roll function for initiative (NPCs only)
@@ -107,29 +108,46 @@ scrollable_frame = create_scrollable_frame(0, 0, 500, 650)
 ###############################################################################################
 
 
-# TODO: Add 70 character limit
+# TODO: Add 70 character limit (for name)
 
 
-def create_new_text(x, y, text):
-    text_box = tk.Text(scrollable_frame, height=1, width=5)
+class DestroyButton(tk.Button):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.configure(command=self.callback)
+
+    def callback(self):
+        self.master.destroy()
+
+def create_new_text(x, y, text, parent):
+    text_box = tk.Text(parent, height=1, width=5)
     text_box.place(x=x, y=y)
     text_box.insert(tk.END, str(text))
 
-def create_new_label(x, y, text):
-    label = tk.Label(scrollable_frame, text=text, borderwidth=2, relief="solid")
+def create_new_label(x, y, text, parent):
+    label = tk.Label(parent, text=text, borderwidth=2, relief="solid")
     label.place(x=x, y=y)
+
+def create_new_frame(x, y, width, height, name, health, armour):
+    frame = tk.Frame(width=width, height=height, borderwidth=5, relief=tk.GROOVE)
+    frame.place(x=x, y=y)
+    create_new_label(10, 0, name, frame)
+    create_new_text(110+(int(len(name))*3), 0, health, frame)
+    create_new_text(210+(int(len(name))*3), 0, armour, frame)
+
 
 def create_new_character():
     global character_count
     name = name_text_box.get("1.0", "end-1c")
     health = health_text_box.get("1.0","end-1c")
     armour = armour_text_box.get("1.0","end-1c")
-    create_new_label(10, (40*character_count), name)
-    create_new_text(110+(int(len(name))*3), (40*character_count), health)
-    create_new_text(210+(int(len(name))*3), (40*character_count), armour)
     scrollable_frame.configure(height=40 * (character_count+1))
-
+    create_new_frame(10, (40*character_count), 450, 40, name, health, armour)
     character_count += 1
+
+
+# TODO: Add labels for different attributes.
+# TODO: Add method to delete characters.
 
 
 name_text_box_label = tk.Label(root, text="Name")
@@ -149,7 +167,6 @@ armour_text_box.place(x=275,y=700)
 
 armour_text_box_label = tk.Label(root, text="Armour")
 armour_text_box_label.place(x=275, y=675)
-
 
 new_character_button = tk.Button(root, text="New Character", command=create_new_character)
 new_character_button.place(x=10,y=700)
