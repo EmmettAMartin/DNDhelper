@@ -9,7 +9,7 @@ global character_count
 
 root = tk.Tk()
 
-root.geometry("750x750")
+root.geometry("900x750")
 
 root.title("DNDhelper v1.0 - Not Resizable")
 
