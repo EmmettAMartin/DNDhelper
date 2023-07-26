@@ -17,6 +17,10 @@ root.resizable(False,False)
 
 title = tk.Label(text="DNDHelper")
 
+frame_height = 80
+
+frame_list = []
+
 '''
 Features: DONE - Button that allows you to add a new character/NPC
           DONE - Text boxes that can store numbers
@@ -110,6 +114,12 @@ scrollable_frame = create_scrollable_frame(0, 0, 500, 650)
 
 # TODO: Add 70 character limit
 
+def reposition_frames():
+    curr_y = 0
+    for frame in frame_list:
+        frame.place(x=10, y=curr_y)
+        curr_y += 80
+
 
 class DestroyButton(tk.Button):
     def __init__(self, *args, **kwargs):
@@ -117,8 +127,15 @@ class DestroyButton(tk.Button):
         self.configure(command=self.callback)
 
     def callback(self):
+        global character_count
+        index = frame_list.index(self.master)
+        frame_list.pop(index)
         self.master.destroy()
+        reposition_frames()
+        character_count -= 1
         
+
+
 
 def create_new_text(x, y, text, parent):
     text_box = tk.Text(parent, height=1, width=5)
@@ -137,14 +154,15 @@ def create_new_frame(x, y, width, height, name, health, armour):
     destroy = DestroyButton(frame, text="Destroy Character")
     destroy.place(x=0, y=40)
     frame.place(x=x, y=y)
+    frame_list.append(frame)
 
 def create_new_character():
     global character_count
     name = name_text_box.get("1.0", "end-1c")
     health = health_text_box.get("1.0","end-1c")
     armour = armour_text_box.get("1.0","end-1c")
-    scrollable_frame.configure(height=80 * (character_count+1))
-    create_new_frame(10, (80*character_count), 450, 80, name, health, armour)
+    scrollable_frame.configure(height= frame_height * (character_count+1))
+    create_new_frame(10, (frame_height*character_count), 450, frame_height, name, health, armour)
     character_count += 1
 
 
