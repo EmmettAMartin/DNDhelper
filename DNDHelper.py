@@ -133,6 +133,7 @@ class DestroyButton(tk.Button):
         self.master.destroy()
         reposition_frames()
         character_count -= 1
+        scrollable_frame.configure(height = (len(frame_list)+1)*80)
         
 
 
